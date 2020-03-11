@@ -5,8 +5,8 @@
     
     <system:Double x:Key="windowMinHeight">885</system:Double>
     <system:Double x:Key="windowHeight">885</system:Double>
-    <system:Double x:Key="windowMinWidth">645</system:Double>
-    <system:Double x:Key="windowWidth">645</system:Double>
+    <system:Double x:Key="windowMinWidth">778</system:Double>
+    <system:Double x:Key="windowWidth">778</system:Double>
     <system:Double x:Key="windowMaxWidth">1250</system:Double>
     <system:Double x:Key="windowFontSize">18</system:Double>
 
@@ -30,7 +30,7 @@
     <system:Double x:Key="toggleSwitchHeight">100</system:Double>
     <system:Double x:Key="toggleSwitchIconsFontSize">24</system:Double>
     <system:Double x:Key="toggleSwitchIconsWidth">25</system:Double>    
-    <system:Double x:Key="toggleSwitchHeaderMaxHeight">44</system:Double>
+    <system:Double x:Key="toggleSwitchHeaderMaxHeight">40</system:Double>
     <system:Double x:Key="toggleSwitchDescriptionMaxHeight">40</system:Double>
     <system:Double x:Key="toggleSwitchTextMaxWidth">421</system:Double>    
     <system:Double x:Key="fontSizeToggleSwitchDescription">14</system:Double>

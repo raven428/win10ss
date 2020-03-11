@@ -36,17 +36,7 @@ namespace W10SS_GUI.Controls
 
         // Using a DependencyProperty as the backing store for IsChecked.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register("IsChecked", typeof(bool), typeof(ToggleSwitch), new PropertyMetadata(default(bool)));
-
-        //public string Icon
-        //{
-        //    get { return (string)GetValue(IconProperty); }
-        //    set { SetValue(IconProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for Icon.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty IconProperty =
-        //    DependencyProperty.Register("Icon", typeof(string), typeof(ToggleSwitch), new PropertyMetadata(default(string)));
+            DependencyProperty.Register("IsChecked", typeof(bool), typeof(ToggleSwitch), new PropertyMetadata(default(bool)));        
 
         public string Header
         {
@@ -90,9 +80,55 @@ namespace W10SS_GUI.Controls
             DependencyProperty.Register("ScriptPath", typeof(string), typeof(ToggleSwitch), new PropertyMetadata(default(string)));
 
 
+
+        public string HeaderRU
+        {
+            get { return (string)GetValue(HeaderRUProperty); }
+            set { SetValue(HeaderRUProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for HeaderRU.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HeaderRUProperty =
+            DependencyProperty.Register("HeaderRU", typeof(string), typeof(ToggleSwitch), new PropertyMetadata(default(string)));
+
+        public string HeaderEN
+        {
+            get { return (string)GetValue(HeaderENProperty); }
+            set { SetValue(HeaderENProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for HeaderEN.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HeaderENProperty =
+            DependencyProperty.Register("HeaderEN", typeof(string), typeof(ToggleSwitch), new PropertyMetadata(default(string)));
+
+
+
+        public string DescriptionRU
+        {
+            get { return (string)GetValue(DescriptionRUProperty); }
+            set { SetValue(DescriptionRUProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DescriptionRU.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DescriptionRUProperty =
+            DependencyProperty.Register("DescriptionRU", typeof(string), typeof(ToggleSwitch), new PropertyMetadata(default(string)));
+
+        public string DescriptionEN
+        {
+            get { return (string)GetValue(DescriptionENProperty); }
+            set { SetValue(DescriptionENProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DescriptionEN.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DescriptionENProperty =
+            DependencyProperty.Register("DescriptionEN", typeof(string), typeof(ToggleSwitch), new PropertyMetadata(default(string)));
+
+        public event RoutedEventHandler IsSwitched;
+
         private void ToggleSwitch_Click(object sender, RoutedEventArgs e)
         {
             gridToggleSwitch.Background = toggleSwitch.IsChecked == true ? brushBackgroundHover : brushBackground ;
+            IsSwitched?.Invoke(this, new RoutedEventArgs());
         }
 
         private void GridToggleSwitch_MouseEnter(object sender, MouseEventArgs e)
