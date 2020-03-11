@@ -23,11 +23,11 @@ namespace W10SS_GUI
             internal const string RU = "ru";
         }       
 
-        private static string _culture = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName == Culture.RU ? Culture.RU : Culture.EN;
-        private HamburgerCategoryButton _lastclickedbutton;
-        private Dictionary<string, StackPanel> _togglesCategoryAndPanels = new Dictionary<string, StackPanel>();
+        private static string culture = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName == Culture.RU ? Culture.RU : Culture.EN;
+        private HamburgerCategoryButton lastclickedbutton;
+        private Dictionary<string, StackPanel> togglesCategoryAndPanels = new Dictionary<string, StackPanel>();
 
-        internal string LastClickedButtonName => _lastclickedbutton.Name as string;
+        internal string LastClickedButtonName => lastclickedbutton.Name as string;
         private uint TogglesCounter = default(uint);                
         private List<ToggleSwitch> TogglesSwitches = new List<ToggleSwitch>();
         private static ResourceDictionary resourceDictionaryEn = new ResourceDictionary() { Source = new Uri("pack://application:,,,/Localized/EN.xaml", UriKind.Absolute) };
@@ -42,7 +42,7 @@ namespace W10SS_GUI
         {
             foreach (var tagValue in Application.Current.Resources.MergedDictionaries.Where(r => r.Source.LocalPath == "/Resource/tags.xaml").First().Values)
             {
-                _togglesCategoryAndPanels.Add(tagValue.ToString(), panelTogglesCategoryContainer.Children.OfType<StackPanel>().Where(p => p.Tag == tagValue).First());
+                togglesCategoryAndPanels.Add(tagValue.ToString(), panelTogglesCategoryContainer.Children.OfType<StackPanel>().Where(p => p.Tag == tagValue).First());
             }
         }
         
@@ -51,22 +51,22 @@ namespace W10SS_GUI
             Resources.MergedDictionaries.Add(GetCurrentCulture());                
         }
 
-        internal static ResourceDictionary GetCurrentCulture() => _culture == Culture.RU ? resourceDictionaryRu : resourceDictionaryEn;
+        internal static ResourceDictionary GetCurrentCulture() => culture == Culture.RU ? resourceDictionaryRu : resourceDictionaryEn;
 
-        internal static string GetCurrentCultureName() => _culture == Culture.RU ? Culture.RU : Culture.EN;
+        internal static string GetCurrentCultureName() => culture == Culture.RU ? Culture.RU : Culture.EN;
 
         internal static ResourceDictionary ChangeCulture()
         {
-            _culture = _culture == Culture.RU ? Culture.EN : Culture.RU;
-            return _culture == Culture.RU ? resourceDictionaryRu : resourceDictionaryEn;
+            culture = culture == Culture.RU ? Culture.EN : Culture.RU;
+            return culture == Culture.RU ? resourceDictionaryRu : resourceDictionaryEn;
         }
 
         private void InitializeToggles()
         {
-            for (int i = 0; i < _togglesCategoryAndPanels.Keys.Count; i++)
+            for (int i = 0; i < togglesCategoryAndPanels.Keys.Count; i++)
             {
-                string categoryName = _togglesCategoryAndPanels.Keys.ToList()[i];
-                StackPanel categoryPanel = _togglesCategoryAndPanels[categoryName];
+                string categoryName = togglesCategoryAndPanels.Keys.ToList()[i];
+                StackPanel categoryPanel = togglesCategoryAndPanels[categoryName];
                 string psScriptsDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, categoryName);
 
                 List<ToggleSwitch> togglesSwitches = Directory.Exists(psScriptsDir)
@@ -76,30 +76,20 @@ namespace W10SS_GUI
 
                     ? Directory.EnumerateFiles(psScriptsDir, "*.*", SearchOption.AllDirectories)
                                .Where(f => f.EndsWith(".ps1"))
-                               .Select(f => CreateToogleSwitchFromScript(f))
+                               .Select(f => CreateToogleSwitchFromPsFiles(f))
                                .ToList()
                     : null;
 
-                togglesSwitches?.Where(t => t.IsValid == true).ToList().ForEach(t => categoryPanel.Children.Add(t));
+                togglesSwitches?.Where(s => s.IsValid == true).ToList().ForEach(s => categoryPanel.Children.Add(s));
             }
         }
 
-        private ToggleSwitch CreateToogleSwitchFromScript(string scriptPath)
+        private ToggleSwitch CreateToogleSwitchFromPsFiles(string scriptPath)
         {
             string dictionaryHeaderID = $"ToggleHeader-{TogglesCounter}";
             string dictionaryDescriptionID = $"ToggleDescription-{TogglesCounter}";
             string[] arrayLines = new string[4];
-
-            ResourceDictionary dictionaryEN = new ResourceDictionary()
-            {
-                Source = new Uri("/Localized/EN.xaml", UriKind.Relative)
-            };
-
-            ResourceDictionary dictionaryRU = new ResourceDictionary()
-            {
-                Source = new Uri("/Localized/RU.xaml", UriKind.Relative)
-            };
-
+            
             ToggleSwitch toggleSwitch = new ToggleSwitch()
             {
                 ScriptPath = scriptPath
@@ -112,7 +102,7 @@ namespace W10SS_GUI
                     for (int i = 0; i < 4; i++)
                     {
                         string textLine = streamReader.ReadLine();
-                        toggleSwitch.IsValid = textLine.StartsWith("# ") && textLine.Length >= 10 ? true : false;
+                        toggleSwitch.IsValid = textLine.StartsWith("#") ? true : false;
                         arrayLines[i] = textLine.Replace("# ", "");
                     }
                 }
@@ -122,13 +112,10 @@ namespace W10SS_GUI
 
             }
 
-            dictionaryEN.Add(dictionaryHeaderID, arrayLines[0]);
-            dictionaryEN.Add(dictionaryDescriptionID, arrayLines[1]);
-
-            //dictionaryEN[dictionaryHeaderID] = arrayLines[0];
-            //dictionaryEN[dictionaryDescriptionID] = arrayLines[1];
-            //dictionaryRU[dictionaryHeaderID] = arrayLines[2];
-            //dictionaryRU[dictionaryDescriptionID] = arrayLines[3];
+            resourceDictionaryEn[dictionaryHeaderID] = arrayLines[0];
+            resourceDictionaryEn[dictionaryDescriptionID] = arrayLines[1];
+            resourceDictionaryRu[dictionaryHeaderID] = arrayLines[2];
+            resourceDictionaryRu[dictionaryDescriptionID] = arrayLines[3];
 
             toggleSwitch.SetResourceReference(ToggleSwitch.HeaderProperty, dictionaryHeaderID);
             toggleSwitch.SetResourceReference(ToggleSwitch.DescriptionProperty, dictionaryDescriptionID);
@@ -140,9 +127,9 @@ namespace W10SS_GUI
 
         internal void SetActivePanel(HamburgerCategoryButton button)
         {
-            _lastclickedbutton = button;
+            lastclickedbutton = button;
 
-            foreach (KeyValuePair<string, StackPanel> kvp in _togglesCategoryAndPanels)
+            foreach (KeyValuePair<string, StackPanel> kvp in togglesCategoryAndPanels)
             {
                 kvp.Value.Visibility = kvp.Key == button.Tag as string ? Visibility.Visible : Visibility.Collapsed;
             }
@@ -150,7 +137,7 @@ namespace W10SS_GUI
             textTogglesHeader.Text = Resources[button.Name] as string;
         }
 
-        internal void HamburgerReOpen()
+        internal void RefreshHamburgerWidth()
         {
             MouseEventArgs mouseLeaveArgs = new MouseEventArgs(Mouse.PrimaryDevice, 0)
             {
@@ -184,7 +171,7 @@ namespace W10SS_GUI
         {            
             Resources.MergedDictionaries.Add(ChangeCulture());
             SetHamburgerWidth(GetCurrentCultureName());
-            HamburgerReOpen();
+            RefreshHamburgerWidth();
             textTogglesHeader.Text = Convert.ToString(Resources[LastClickedButtonName]);            
         }
 
