@@ -150,14 +150,14 @@
                                         Canvas.Top="360" Canvas.Left="0"
                                         MouseLeftButtonDown="ButtonHamburger_Click"/>
 
-            <uc:HamburgerCategoryButton x:Name="HamburgerApplySettings"
-                                        IsEnabled="False"
-                                        IconVisibility="Collapsed"
-                                        ViewboxPathData="{StaticResource iconHamburgerApplySettings}"
-                                        Text="{DynamicResource textHamburgerApply}" 
-                                        Width="{Binding ElementName=panelHamburger, Path=Width}"
-                                        TextMargin="0 0 10 1"                                             
-                                        Canvas.Bottom="0" Canvas.Left="0"/>
+            <uc:HamburgerCategoryFlashButton x:Name="HamburgerApplySettings"
+                                             IsEnabled="False"
+                                             IconVisibility="Collapsed"
+                                             ViewboxPathData="{StaticResource iconHamburgerApplySettings}"
+                                             Text="{DynamicResource textHamburgerApply}" 
+                                             Width="{Binding ElementName=panelHamburger, Path=Width}"
+                                             TextMargin="0 0 10 1"                                             
+                                             Canvas.Bottom="0" Canvas.Left="0"/>
 
             <uc:HamburgerCategoryButton x:Name="HamburgerSaveSettings"
                                         IsEnabled="False"

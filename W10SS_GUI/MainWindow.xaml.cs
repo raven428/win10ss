@@ -24,12 +24,11 @@ namespace W10SS_GUI
         }       
 
         private static string culture = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName == Culture.RU ? Culture.RU : Culture.EN;
-        private uint checkedToggles = default(uint);
         private HamburgerCategoryButton lastclickedbutton;
         private Dictionary<string, StackPanel> togglesCategoryAndPanels = new Dictionary<string, StackPanel>();
 
         internal string LastClickedButtonName => lastclickedbutton.Name as string;
-        private uint TogglesCounter = default(uint);        
+        private uint TogglesCounter = default(uint);                
         private List<ToggleSwitch> TogglesSwitches = new List<ToggleSwitch>();
         private static ResourceDictionary resourceDictionaryEn = new ResourceDictionary() { Source = new Uri("pack://application:,,,/Localized/EN.xaml", UriKind.Absolute) };
         private static ResourceDictionary resourceDictionaryRu = new ResourceDictionary() { Source = new Uri("pack://application:,,,/Localized/RU.xaml", UriKind.Absolute) };
@@ -81,27 +80,14 @@ namespace W10SS_GUI
                                .ToList()
                     : null;
 
-                togglesSwitches?.Where(s => s.IsValid == true).ToList().ForEach(s => SetToggleLanguageAndLocation(s, categoryPanel));
+                togglesSwitches?.Where(s => s.IsValid == true).ToList().ForEach(s => categoryPanel.Children.Add(s));
             }
         }
 
-        private void SetToggleLanguageAndLocation(ToggleSwitch toggleSwitch, StackPanel parentPanel)
-        {
-            resourceDictionaryEn[$"THeader_{TogglesCounter}"] = toggleSwitch.HeaderEN;
-            resourceDictionaryEn[$"TDescription_{TogglesCounter}"] = toggleSwitch.DescriptionEN;
-            resourceDictionaryRu[$"THeader_{TogglesCounter}"] = toggleSwitch.HeaderRU;
-            resourceDictionaryRu[$"TDescription_{TogglesCounter}"] = toggleSwitch.DescriptionRU;
-
-            toggleSwitch.SetResourceReference(ToggleSwitch.HeaderProperty, $"THeader_{TogglesCounter}");
-            toggleSwitch.SetResourceReference(ToggleSwitch.DescriptionProperty, $"TDescription_{TogglesCounter}");
-            toggleSwitch.IsSwitched += ToggleSwitch_IsSwitched;                        
-            TogglesSwitches.Add(toggleSwitch);
-            parentPanel.Children.Add(toggleSwitch);
-            TogglesCounter++;
-        }        
-
         private ToggleSwitch CreateToogleSwitchFromPsFiles(string scriptPath)
-        {            
+        {
+            string dictionaryHeaderID = $"ToggleHeader-{TogglesCounter}";
+            string dictionaryDescriptionID = $"ToggleDescription-{TogglesCounter}";
             string[] arrayLines = new string[4];
             
             ToggleSwitch toggleSwitch = new ToggleSwitch()
@@ -113,10 +99,10 @@ namespace W10SS_GUI
             {
                 using (StreamReader streamReader = new StreamReader(scriptPath, Encoding.UTF8))
                 {
-                    for (int i = 0; i < arrayLines.Length; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         string textLine = streamReader.ReadLine();
-                        toggleSwitch.IsValid = textLine.StartsWith("# ") ? true : false;
+                        toggleSwitch.IsValid = textLine.StartsWith("#") ? true : false;
                         arrayLines[i] = textLine.Replace("# ", "");
                     }
                 }
@@ -126,10 +112,16 @@ namespace W10SS_GUI
 
             }
 
-            toggleSwitch.HeaderEN = arrayLines[0];
-            toggleSwitch.DescriptionEN = arrayLines[1];
-            toggleSwitch.HeaderRU = arrayLines[2];
-            toggleSwitch.DescriptionRU = arrayLines[3];                        
+            resourceDictionaryEn[dictionaryHeaderID] = arrayLines[0];
+            resourceDictionaryEn[dictionaryDescriptionID] = arrayLines[1];
+            resourceDictionaryRu[dictionaryHeaderID] = arrayLines[2];
+            resourceDictionaryRu[dictionaryDescriptionID] = arrayLines[3];
+
+            toggleSwitch.SetResourceReference(ToggleSwitch.HeaderProperty, dictionaryHeaderID);
+            toggleSwitch.SetResourceReference(ToggleSwitch.DescriptionProperty, dictionaryDescriptionID);
+
+            TogglesCounter++;
+            TogglesSwitches.Add(toggleSwitch);
             return toggleSwitch;
         }
 
@@ -181,16 +173,6 @@ namespace W10SS_GUI
             SetHamburgerWidth(GetCurrentCultureName());
             RefreshHamburgerWidth();
             textTogglesHeader.Text = Convert.ToString(Resources[LastClickedButtonName]);            
-        }
-
-        private void ToggleSwitch_IsSwitched(object sender, RoutedEventArgs e)
-        {
-            if ((sender as ToggleSwitch).IsChecked)
-                checkedToggles++;
-            else
-                checkedToggles--;
-
-            HamburgerApplySettings.IsEnabled = checkedToggles > 0 ? true : false ;            
         }
 
         private void Window_Initialized(object sender, EventArgs e)

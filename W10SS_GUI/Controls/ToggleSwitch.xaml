@@ -42,7 +42,7 @@
         <!--#region Toggle Switch Style-->
         <Style TargetType="{x:Type ToggleButton}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="0" />
+            <Setter Property="Margin" Value="10 0 10 0" />
             <Setter Property="Background" Value="{StaticResource RadioButton.Static.Background}"/>
             <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Static.Border}"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -182,26 +182,31 @@
           MinWidth="{StaticResource toggleSwitchMinWidth}"         
           Height="{StaticResource toggleSwitchHeight}"
           Margin="10 0 10 0" 
-          MouseEnter="GridToggleSwitch_MouseEnter" MouseLeave="GridToggleSwitch_MouseLeave" >
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="80"/>
-        </Grid.ColumnDefinitions>
+          MouseEnter="GridToggleSwitch_MouseEnter" MouseLeave="GridToggleSwitch_MouseLeave"
+          >                   
 
-    <StackPanel VerticalAlignment="Center" 
+        <!--<TextBlock Name="iconToggleSwitch" 
+                   FontFamily="{StaticResource fontToggleIcon}"
+                   Width="{StaticResource toggleSwitchIconsWidth}"
+                   FontSize="{DynamicResource toggleSwitchIconsFontSize}"
+                   Margin="10 0 5 0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=Icon}"/>-->
+
+        <StackPanel VerticalAlignment="Center" 
                     HorizontalAlignment="Left"
-                    Margin="10 2 0 2"
-                Grid.Column="0">                    
+                    Margin="10 5 60 5">
+                    <!--Margin="45 5 60 5">-->
         
             <TextBlock Name="textToggleSwitchHeader" 
                        FontFamily="{StaticResource fontToggleSwitchHeader}"                                      
                        FontSize="{StaticResource fontSizeToggleSwitchHeader}"                       
                        TextWrapping="Wrap"   
-                       Padding="0 3 0 3"
                        Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=Header}"                       
-                       MaxHeight="{StaticResource toggleSwitchHeaderMaxHeight}" />
+                       MaxHeight="{StaticResource toggleSwitchHeaderMaxHeight}"/>
 
-            <TextBlock Name="textToggleSwitchDescription"                       
+            <TextBlock Name="textToggleSwitchDescription" 
                        FontFamily="{StaticResource fontToggleSwitchDescription}"                   
                        FontSize="{StaticResource fontSizeToggleSwitchDescription}"
                        Foreground="{DynamicResource colorToggleDescription}" 
@@ -212,9 +217,8 @@
         </StackPanel>
         
         <ToggleButton Name="toggleSwitch"
-                      Grid.Column="1"
                       VerticalAlignment="Center" 
-                      HorizontalAlignment="Center"
+                      HorizontalAlignment="Right"
                       IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=IsChecked}" 
                       Click="ToggleSwitch_Click" />
 
