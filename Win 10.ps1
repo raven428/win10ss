@@ -243,6 +243,9 @@ New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDe
 # Turn off automatic installing suggested apps
 # Отключить автоматическую установку рекомендованных приложений
 New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager -Name SilentInstalledAppsEnabled -PropertyType DWord -Value 0 -Force
+# Do not let track app launches to improve Start menu and search results
+# не разрешать Windows отслеживать запуски приложений для улучшения меню "Пуск" и результатов поиска
+New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name Start_TrackProgs -PropertyType DWord -Value 0 -Force
 #endregion Privacy & Telemetry
 
 #region UI & Personalization
