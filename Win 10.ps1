@@ -409,14 +409,14 @@ if (-not (Test-Path -Path $env:SystemDrive\Temp))
 {
 	New-Item -Path $env:SystemDrive\Temp -ItemType Directory -Force
 }
-[Environment]::SetEnvironmentVariable("TMP", "d:\temp", "User")
-New-ItemProperty -Path HKCU:\Environment -Name TMP -PropertyType ExpandString -Value d:\temp -Force
-[Environment]::SetEnvironmentVariable("TEMP", "d:\temp", "User")
-New-ItemProperty -Path HKCU:\Environment -Name TEMP -PropertyType ExpandString -Value d:\temp -Force
-[Environment]::SetEnvironmentVariable("TMP", "d:\users\%USERNAME%\temp", "Machine")
-New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name TMP -PropertyType ExpandString -Value d:\users\%USERNAME%\temp -Force
-[Environment]::SetEnvironmentVariable("TEMP", "d:\users\%USERNAME%\temp", "Machine")
-New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name TEMP -PropertyType ExpandString -Value d:\users\%USERNAME%\temp -Force
+[Environment]::SetEnvironmentVariable("TMP", "d:\users\%USERNAME%\temp", "User")
+New-ItemProperty -Path HKCU:\Environment -Name TMP -PropertyType ExpandString -Value 'd:\users\%USERNAME%\temp' -Force
+[Environment]::SetEnvironmentVariable("TEMP", "d:\users\%USERNAME%\temp", "User")
+New-ItemProperty -Path HKCU:\Environment -Name TEMP -PropertyType ExpandString -Value 'd:\users\%USERNAME%\temp' -Force
+[Environment]::SetEnvironmentVariable("TMP", "d:\temp", "Machine")
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name TMP -PropertyType ExpandString -Value d:\temp -Force
+[Environment]::SetEnvironmentVariable("TEMP", "d:\temp", "Machine")
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" -Name TEMP -PropertyType ExpandString -Value d:\temp -Force
 [Environment]::SetEnvironmentVariable("TMP", "d:\users\%USERNAME%\temp", "Process")
 [Environment]::SetEnvironmentVariable("TEMP", "d:\users\%USERNAME%\temp", "Process")
 Restart-Service -Name Spooler -Force
