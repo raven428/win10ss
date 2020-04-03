@@ -9,7 +9,7 @@
 function Set-KnownFolderPath {
     Param (
             [Parameter(Mandatory = $true)]
-            [ValidateSet('AddNewPrograms', 'AdminTools', 'AppUpdates', 'CDBurning', 'ChangeRemovePrograms', 'CommonAdminTools', 'CommonOEMLinks', 'CommonPrograms', 'CommonStartMenu', 'CommonStartup', 'CommonTemplates', 'ComputerFolder', 'ConflictFolder', 'ConnectionsFolder', 'Contacts', 'ControlPanelFolder', 'Cookies', 'Desktop', 'Documents', 'Downloads', 'Favorites', 'Fonts', 'Games', 'GameTasks', 'History', 'InternetCache', 'InternetFolder', 'Links', 'LocalAppData', 'LocalAppDataLow', 'LocalizedResourcesDir', 'Music', 'NetHood', 'NetworkFolder', 'OriginalImages', 'PhotoAlbums', 'Pictures', 'Playlists', 'PrintersFolder', 'PrintHood', 'Profile', 'ProgramData', 'ProgramFiles', 'ProgramFilesX64', 'ProgramFilesX86', 'ProgramFilesCommon', 'ProgramFilesCommonX64', 'ProgramFilesCommonX86', 'Programs', 'Public', 'PublicDesktop', 'PublicDocuments', 'PublicDownloads', 'PublicGameTasks', 'PublicMusic', 'PublicPictures', 'PublicVideos', 'QuickLaunch', 'Recent', 'RecycleBinFolder', 'ResourceDir', 'RoamingAppData', 'SampleMusic', 'SamplePictures', 'SamplePlaylists', 'SampleVideos', 'SavedGames', 'SavedSearches', 'SEARCH_CSC', 'SEARCH_MAPI', 'SearchHome', 'SendTo', 'SidebarDefaultParts', 'SidebarParts', 'StartMenu', 'Startup', 'SyncManagerFolder', 'SyncResultsFolder', 'SyncSetupFolder', 'System', 'SystemX86', 'Templates', 'TreeProperties', 'UserProfiles', 'UsersFiles', 'Videos', 'Windows')]
+            [ValidateSet('AddNewPrograms', 'AdminTools', 'AppUpdates', 'CDBurning', 'ChangeRemovePrograms', 'CommonAdminTools', 'CommonOEMLinks', 'CommonPrograms', 'CommonStartMenu', 'CommonStartup', 'CommonTemplates', 'ComputerFolder', 'ConflictFolder', 'ConnectionsFolder', 'Contacts', 'ControlPanelFolder', 'Cookies', 'Desktop', 'Documents', 'Downloads', 'Favorites', 'Fonts', 'Games', 'GameTasks', 'History', 'InternetCache', 'InternetFolder', 'Links', 'LocalAppData', 'LocalAppDataLow', 'LocalizedResourcesDir', 'Music', 'NetHood', 'NetworkFolder', 'OriginalImages', 'PhotoAlbums', 'Pictures', 'Playlists', 'PrintersFolder', 'PrintHood', 'Profile', 'ProgramData', 'ProgramFiles', 'ProgramFilesX64', 'ProgramFilesX86', 'ProgramFilesCommon', 'ProgramFilesCommonX64', 'ProgramFilesCommonX86', 'Programs', 'Public', 'PublicDesktop', 'PublicDocuments', 'PublicDownloads', 'PublicGameTasks', 'PublicMusic', 'PublicPictures', 'PublicVideos', 'QuickLaunch', 'Recent', 'RecycleBinFolder', 'ResourceDir', 'RoamingAppData', 'SampleMusic', 'SamplePictures', 'SamplePlaylists', 'SampleVideos', 'SavedGames', 'SavedSearches', 'SEARCH_CSC', 'SEARCH_MAPI', 'SearchHome', 'SendTo', 'SidebarDefaultParts', 'SidebarParts', 'StartMenu', 'Startup', 'SyncManagerFolder', 'SyncResultsFolder', 'SyncSetupFolder', 'System', 'SystemX86', 'Templates', 'TreeProperties', 'UserProfiles', 'UsersFiles', 'Videos', 'Windows', '3D Objects')]
             [string]$KnownFolder,
 
             [Parameter(Mandatory = $true)]
@@ -105,6 +105,7 @@ function Set-KnownFolderPath {
         'UsersFiles' = 'f3ce0f7c-4901-4acc-8648-d5d44b04ef8f';
         'Videos' = '18989B1D-99B5-455B-841C-AB7C74E4DDFC';
         'Windows' = 'F38BF404-1D43-42F2-9305-67DE0B28FC23';
+        '3D Objects' = '31C0DD25-9439-4F12-BF41-7FF4EDA38722';
     }
 
     # Define SHSetKnownFolderPath if it hasn't been defined already
@@ -126,4 +127,21 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 #    }
 }
 
-Set-KnownFolderPath -KnownFolder 'Pictures' -Path "d:\users\$env:username\pics"
+# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+# C:\Users\%USERNAME%\AppData\Roaming\Microsoft\Windows\Libraries
+
+Set-KnownFolderPath -KnownFolder 'Contacts' -Path 'D:\users\%USERNAME1%\contacts'
+Set-KnownFolderPath -KnownFolder 'Desktop' -Path 'D:\users\%USERNAME1%\desktop'
+Set-KnownFolderPath -KnownFolder 'Documents' -Path 'D:\users\%USERNAME1%\docs'
+Set-KnownFolderPath -KnownFolder 'Downloads' -Path 'D:\users\%USERNAME1%\downs'
+Set-KnownFolderPath -KnownFolder 'Favorites' -Path 'D:\users\%USERNAME1%\favs'
+Set-KnownFolderPath -KnownFolder 'SavedGames' -Path 'D:\users\%USERNAME1%\games'
+Set-KnownFolderPath -KnownFolder 'Links' -Path 'D:\users\%USERNAME1%\links'
+Set-KnownFolderPath -KnownFolder 'Music' -Path 'D:\users\%USERNAME1%\music'
+Set-KnownFolderPath -KnownFolder 'Pictures' -Path 'D:\users\%USERNAME1%\pics'
+Set-KnownFolderPath -KnownFolder 'Videos' -Path 'D:\users\%USERNAME1%\vids'
+Set-KnownFolderPath -KnownFolder '3D Objects' -Path 'D:\users\%USERNAME1%\3do'
+
+# rename '%USERNAME1%' to '%USERNAME%'
+# HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders
+# HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders
