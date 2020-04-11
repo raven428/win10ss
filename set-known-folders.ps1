@@ -130,17 +130,17 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 # C:\Users\%USERNAME%\AppData\Roaming\Microsoft\Windows\Libraries
 
-#Set-KnownFolderPath -KnownFolder 'Contacts' -Path 'D:\users\%USERNAME1%\contacts'
-#Set-KnownFolderPath -KnownFolder 'Desktop' -Path 'D:\users\%USERNAME1%\desktop'
-#Set-KnownFolderPath -KnownFolder 'Documents' -Path 'D:\users\%USERNAME1%\docs'
-#Set-KnownFolderPath -KnownFolder 'Downloads' -Path 'D:\users\%USERNAME1%\downs'
-#Set-KnownFolderPath -KnownFolder 'Favorites' -Path 'D:\users\%USERNAME1%\favs'
-#Set-KnownFolderPath -KnownFolder 'SavedGames' -Path 'D:\users\%USERNAME1%\games'
-#Set-KnownFolderPath -KnownFolder 'Links' -Path 'D:\users\%USERNAME1%\links'
-#Set-KnownFolderPath -KnownFolder 'Music' -Path 'D:\users\%USERNAME1%\music'
-#Set-KnownFolderPath -KnownFolder 'Pictures' -Path 'D:\users\%USERNAME1%\pics'
-#Set-KnownFolderPath -KnownFolder 'Videos' -Path 'D:\users\%USERNAME1%\vids'
-#Set-KnownFolderPath -KnownFolder '3D Objects' -Path 'D:\users\%USERNAME1%\3do'
+Set-KnownFolderPath -KnownFolder 'Contacts' -Path 'D:\users\%USERNAME1%\contacts'
+Set-KnownFolderPath -KnownFolder 'Desktop' -Path 'D:\users\%USERNAME1%\desktop'
+Set-KnownFolderPath -KnownFolder 'Documents' -Path 'D:\users\%USERNAME1%\docs'
+Set-KnownFolderPath -KnownFolder 'Downloads' -Path 'D:\users\%USERNAME1%\downs'
+Set-KnownFolderPath -KnownFolder 'Favorites' -Path 'D:\users\%USERNAME1%\favs'
+Set-KnownFolderPath -KnownFolder 'SavedGames' -Path 'D:\users\%USERNAME1%\games'
+Set-KnownFolderPath -KnownFolder 'Links' -Path 'D:\users\%USERNAME1%\links'
+Set-KnownFolderPath -KnownFolder 'Music' -Path 'D:\users\%USERNAME1%\mus'
+Set-KnownFolderPath -KnownFolder 'Pictures' -Path 'D:\users\%USERNAME1%\pics'
+Set-KnownFolderPath -KnownFolder 'Videos' -Path 'D:\users\%USERNAME1%\vids'
+Set-KnownFolderPath -KnownFolder '3D Objects' -Path 'D:\users\%USERNAME1%\3do'
 Set-KnownFolderPath -KnownFolder 'SavedSearches' -Path 'D:\users\%USERNAME1%\searches'
 
 # rename '%USERNAME1%' to '%USERNAME%'
